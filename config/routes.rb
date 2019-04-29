@@ -4,6 +4,9 @@ Rails.application.routes.draw do
         resources :users
         resources :events
         resources :comments
+        post '/signup', to: 'auth#create'
+        post '/login', to: 'auth#login'
+        get '/auto_login', to: 'auth#auto_login'
     end
   end
 end

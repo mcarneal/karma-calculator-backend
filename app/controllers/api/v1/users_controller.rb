@@ -10,12 +10,38 @@ class Api::V1::UsersController < ApplicationController
   end
 
   def create
-  end
+      @user = User.create(user_params)
+      if @user.valid?
+        token = JWT.encode({user_id: @user.id}, ENV['SECRET_WORD'])
+        render json: { username: @user.username, token: token, id: @user.id}, status: :created
+      else
+        render json: { error: 'failed to create user' }, status: :not_acceptable
+      end
+    end
 
   def update
   end
 
   def destroy
   end
+
+  def login
+    byebug
+    @user = User.find_by(username: employee_params['username'])
+    enc = @user.password_digest
+    sec = employee_params['password']
+    if BCrypt::Password.new(enc) == sec
+      token = JWT.encode({user_id: @user.id}, ENV['SECRET_WORD'])
+      render json: { username: @user.username, token: token, id: @user.id}, status: :created
+    else
+        render json: { error: 'failed to create user' }, status: :not_acceptable
+    end
+  end
+
+  private
+
+  def user_params
+  params.require(:user).permit(:username, :password)
+end
 
 end
