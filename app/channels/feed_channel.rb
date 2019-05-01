@@ -1,6 +1,5 @@
 class FeedChannel < ApplicationCable::Channel
   def subscribed
-    byebug 
     stream_from "feed"
   end
 

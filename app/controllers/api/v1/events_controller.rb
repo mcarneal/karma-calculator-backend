@@ -12,17 +12,20 @@ class Api::V1::EventsController < ApplicationController
   end
 
   def create
+
     event = Event.create(event_params)
     all_events = Event.all
-    ActionCable.server.broadcast("feed", {events: all_events})
+    all_comments = Comment.all
+    ActionCable.server.broadcast("feed", {events: all_events, comments: all_comments = Comment.all})
   end
 
   def update
+
     @event = Event.find(params['id'])
     @event.karma = event_params['karma']
     @event.save
     all_events = Event.all
-    ActionCable.server.broadcast("feed", {events: all_events})
+    ActionCable.server.broadcast("feed", {events: all_events, comments: all_comments = Comment.all})
   end
 
   def destroy
@@ -31,7 +34,7 @@ class Api::V1::EventsController < ApplicationController
   private
 
   def event_params
-  params.require(:event).permit(:location, :description, :user_id, :id, :karma)
+  params.require(:event).permit(:location, :description, :user_id, :id, :karma, :username, :comments, :userid)
 end
 
 end
