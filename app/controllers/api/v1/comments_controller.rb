@@ -8,12 +8,22 @@ class Api::V1::CommentsController < ApplicationController
   end
 
   def create
+    comment = Comment.create(comment_params)
+    all_events = Event.all
+    ActionCable.server.broadcast("feed", {events: all_events, comment: comment})
+
   end
 
   def update
   end
 
   def destroy
+  end
+
+  private
+
+  def comment_params
+    params.require(:comment).permit(:description, :user_id, :event_id)
   end
 
 end
