@@ -2,7 +2,7 @@ class EventSerializer < ActiveModel::Serializer
   belongs_to :user
   has_many :comments
 
-  attributes :location, :description, :user_id, :karma, :id, :comments, :username, :userid
+  attributes :location, :description, :user_id, :karma, :id, :comments, :username, :userid, :created_by
 
   def comments
     self.object.comments

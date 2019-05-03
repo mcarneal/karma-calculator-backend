@@ -7,6 +7,8 @@ class Api::V1::UsersController < ApplicationController
   end
 
   def show
+    @user = User.find(params[:id])
+    render json: @user
   end
 
   def create
@@ -26,8 +28,8 @@ class Api::V1::UsersController < ApplicationController
   end
 
   def login
-    byebug
-    @user = User.find_by(username: employee_params['username'])
+
+    @user = User.find_by(username: user_params['username'])
     enc = @user.password_digest
     sec = employee_params['password']
     if BCrypt::Password.new(enc) == sec
@@ -41,7 +43,7 @@ class Api::V1::UsersController < ApplicationController
   private
 
   def user_params
-  params.require(:user).permit(:username, :password)
+  params.require(:user).permit(:username, :password, :id)
 end
 
 end
