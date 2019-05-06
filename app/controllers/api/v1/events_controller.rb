@@ -12,7 +12,7 @@ class Api::V1::EventsController < ApplicationController
   end
 
   def create
-
+    byebug
     event = Event.create(event_params)
     all_events = Event.all
     all_comments = Comment.all
@@ -34,7 +34,7 @@ class Api::V1::EventsController < ApplicationController
   private
 
   def event_params
-  params.require(:event).permit(:location, :description, :user_id, :id, :karma, :username, :comments, :userid, :created_by)
+  params.require(:event).permit(:location, :description, :user_id, :id, :karma, :username, :comments, :userid, :created_by, :lat, :lng, :created_at)
 end
 
 end
