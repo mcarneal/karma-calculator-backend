@@ -12,7 +12,6 @@ class Api::V1::EventsController < ApplicationController
   end
 
   def create
-    byebug
     event = Event.create(event_params)
     all_events = Event.all
     all_comments = Comment.all
