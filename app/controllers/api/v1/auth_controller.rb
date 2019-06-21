@@ -1,5 +1,5 @@
 class Api::V1::AuthController < ApplicationController
-  skip_before_action :puts_hi_100_times, only: [:login]
+  skip_before_action :puts_hi_100_times, only: [:login], raise: false
 
   def create
       @user = User.create(user_login_params)
